@@ -1,5 +1,5 @@
 # tf-aks-kv
-Terraform template which provisions an AKS Cluster with Key Vault integration using [CSI secrets store driver](https://github.com/Azure/secrets-store-csi-driver-provider-azure). Authentication to the Key Vault is performed using [AAD Pod Identity](https://github.com/Azure/aad-pod-identity).
+Terraform template which provisions an AKS Cluster with Key Vault integration using [CSI secrets store driver](https://github.com/Azure/secrets-store-csi-driver-provider-azure). Authentication to the Key Vault is performed using [AAD Pod Identity](https://github.com/Azure/aad-pod-identity). This template is based on the [awesome document](https://github.com/paulbouwer/experiments/blob/master/aks/install-aadpodidentity-and-secretsstoredriver.md) published by my colleague **Paul Bouwer**.
 
 ## Requirements
 - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
