@@ -2,8 +2,9 @@
 Terraform template which provisions an AKS Cluster with Key Vault integration using [CSI secrets store driver](https://github.com/Azure/secrets-store-csi-driver-provider-azure). Authentication to the Key Vault is performed using [AAD Pod Identity](https://github.com/Azure/aad-pod-identity).
 
 ## Requirements
-- [Latest Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
-- [Latest Terraform](https://www.terraform.io/downloads.html)
+- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
+- [kubectl](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-install-cli)
+- [Terraform](https://www.terraform.io/downloads.html)
 - [Terraform authenticated via Service Principal](https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_secret.html)
 >**Note:** This template performs [Azure AD role assignments](https://docs.microsoft.com/en-us/azure/role-based-access-control/overview) required by AAD Pod Identity. Therefore the Service Principal used for Terraform authentication must be created with `Owner` privileges.
 
