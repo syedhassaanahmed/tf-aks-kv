@@ -15,7 +15,7 @@ Terraform template which provisions an AKS Cluster with Key Vault integration us
 >**Note:** The CSI secrets store driver requires AKS v1.16+
 
 ## Smoke Test
-Fill the following variables from the Terraform output;
+Once `terraform apply` has successfully completed, fill the following variables from the Terraform output;
 ```sh
 export aad_pod_id_binding_selector="aad-pod-id-binding-selector"
 export aks_cluster_name="aks-xxxxxx"
@@ -34,3 +34,4 @@ Then;
 ```
 ./smoke_test.sh
 ```
+The smoke test will create a test pod in the newly provisioned AKS cluster and will attempt to mount the Key Vault using the CSI driver. Once the pod is successfully started, the test will compare the content of mounted file with the actual value in Key Vault.
