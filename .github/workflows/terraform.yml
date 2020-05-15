@@ -47,10 +47,11 @@ jobs:
 
     - name: Smoke Test
       run: |
-        terraform output | sed 's/^/export /; s/ = /="/g; s/$/"/'
+        # Generate export statements from Terraform output
+        EXPORT_CMD=$(terraform output | sed 's/^/export /; s/ = /="/g; s/$/"/')
 
-        # Generate export statements from Terraform output and evaluate them
-        eval $(terraform output | sed 's/^/export /; s/ = /="/g; s/$/"/')
+        echo $EXPORT_CMD
+        eval $EXPORT_CMD
 
         export SECRET_NAME="demo-secret"
         export SECRET_VALUE="demo-value"
