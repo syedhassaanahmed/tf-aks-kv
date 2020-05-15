@@ -1,5 +1,5 @@
 # tf-aks-kv
-![](https://github.com/syedhassaanahmed/tf-aks-kv/workflows/Terraform/badge.svg)
+![Terraform](https://github.com/syedhassaanahmed/tf-aks-kv/workflows/Terraform/badge.svg)
 
 This Terraform template provisions an AKS Cluster with Key Vault integration using [CSI secrets store driver](https://github.com/Azure/secrets-store-csi-driver-provider-azure). Authentication to the Key Vault is performed using [AAD Pod Identity](https://github.com/Azure/aad-pod-identity). This template is based on the [awesome document](https://github.com/paulbouwer/experiments/blob/master/aks/install-aadpodidentity-and-secretsstoredriver.md) published by my colleague **Paul Bouwer**.
 
@@ -24,6 +24,10 @@ export aks_cluster_name="aks-xxxxxx"
 export key_vault_name="kv-xxxxxx"
 export rg_name="rg-xxxxxx"
 export tenant_id="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+```
+Alternatively, you can also execute the following;
+```sh
+eval $(terraform output | sed 's/^/export /; s/ = /="/g; s/$/"/')
 ```
 
 Set variables for the demo secret in test;

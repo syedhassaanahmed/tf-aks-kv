@@ -35,19 +35,15 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check
 
-    # - name: Terraform Plan
-    #   run: terraform plan -input=false
+    - name: Terraform Plan
+      run: terraform plan -input=false
 
-    # - name: Terraform Apply
-    #   run: terraform apply -input=false -auto-approve
+    - name: Terraform Apply
+      run: terraform apply -input=false -auto-approve
 
     - uses: azure/login@v1
       with:
         creds: ${{ env.AZ_CREDENTIALS }}
-
-    - name: Test
-      run: |
-        az account show
 
     - name: Smoke Test
       run: |
