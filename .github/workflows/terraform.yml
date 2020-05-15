@@ -8,25 +8,13 @@ on:
     - '**.md'
   pull_request:
 
-env:
-  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-  AZ_CREDENTIALS: |
-    {
-      "clientId": "${{ secrets.ARM_CLIENT_ID }}",
-      "clientSecret": "${{ secrets.ARM_CLIENT_SECRET }}",
-      "subscriptionId": "${{ secrets.ARM_SUBSCRIPTION_ID }}",
-      "tenantId": "${{ secrets.ARM_TENANT_ID }}"
-    }
-
 jobs:
   terraform:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+
     - uses: hashicorp/setup-terraform@v1
 
     - name: Terraform Init
@@ -35,30 +23,5 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check
 
-    - name: Terraform Plan
-      run: terraform plan -input=false
-
-    - name: Terraform Apply
-      run: terraform apply -input=false -auto-approve
-
-    - uses: azure/login@v1
-      with:
-        creds: ${{ env.AZ_CREDENTIALS }}
-
-    - name: Smoke Test
-      run: |
-        # Generate export statements from Terraform output
-        EXPORT_CMD=$(terraform output | sed 's/^/export /; s/ = /="/g; s/$/"/')
-
-        echo $EXPORT_CMD
-        eval $EXPORT_CMD
-
-        export SECRET_NAME="demo-secret"
-        export SECRET_VALUE="demo-value"
-
-        chmod +x $GITHUB_WORKSPACE/smoke_test.sh
-        $GITHUB_WORKSPACE/smoke_test.sh
-
-    - name: Terraform Destroy
-      if: ${{ always() }}
-      run: terraform destroy -auto-approve
+    - name: Terraform Validate
+      run: terraform validate
