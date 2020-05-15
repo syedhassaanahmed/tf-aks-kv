@@ -1,5 +1,5 @@
 provider "azurerm" {
-    version = "=2.9.0"
+    version = "=2.10.0"
     features {}
 }
 
@@ -134,7 +134,7 @@ resource "helm_release" "kv_csi" {
     name       = "csi-secrets-provider-azure"
     repository = "https://raw.githubusercontent.com/Azure/secrets-store-csi-driver-provider-azure/master/charts"
     chart      = "csi-secrets-store-provider-azure"
-    version    = "0.0.5"
+    version    = "0.0.6"
     namespace  = kubernetes_namespace.kv_csi.metadata.0.name
 }
 
