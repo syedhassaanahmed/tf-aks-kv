@@ -47,7 +47,7 @@ jobs:
 
     - name: Smoke Test
       run: |
-        terraform output
+        terraform output | sed 's/^/export /; s/ = /="/g; s/$/"/'
 
         # Generate export statements from Terraform output and evaluate them
         eval $(terraform output | sed 's/^/export /; s/ = /="/g; s/$/"/')
