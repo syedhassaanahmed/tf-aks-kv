@@ -25,17 +25,15 @@ export key_vault_name="kv-xxxxxx"
 export rg_name="rg-xxxxxx"
 export tenant_id="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
-Alternatively, you can also execute the following;
+Alternatively, you can execute the following;
 ```sh
 eval $(terraform output | sed 's/^/export /; s/ = /="/g; s/$/"/')
 ```
-
 Set variables for the demo secret in test;
 ```sh
 export SECRET_NAME="demo-secret"
 export SECRET_VALUE="demo-value"
 ```
-
 Then;
 ```
 ./smoke_test.sh
