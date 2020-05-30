@@ -1,5 +1,5 @@
 provider "azurerm" {
-  version = "=2.10.0"
+  version = "=2.12.0"
   features {}
 }
 
@@ -54,29 +54,21 @@ resource "helm_release" "aad_pod_id" {
   name             = "aad-pod-identity"
   repository       = "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
   chart            = "aad-pod-identity"
-  version          = "1.6.0"
+  version          = "2.0.0"
   namespace        = var.aad_pod_id_ns
   create_namespace = true
 
-  set {
-    name  = "azureIdentity.enabled"
-    value = true
-  }
-
-  set {
-    name  = "azureIdentity.resourceID"
-    value = azurerm_user_assigned_identity.mi.id
-  }
-
-  set {
-    name  = "azureIdentity.clientID"
-    value = azurerm_user_assigned_identity.mi.client_id
-  }
-
-  set {
-    name  = "azureIdentityBinding.selector"
-    value = var.aad_pod_id_binding_selector
-  }
+  values = [
+    <<-EOF
+    azureIdentities:
+    - name: "${azurerm_user_assigned_identity.mi.name}"
+      resourceID: "${azurerm_user_assigned_identity.mi.id}"
+      clientID: "${azurerm_user_assigned_identity.mi.client_id}"
+      binding:
+        name: "${azurerm_user_assigned_identity.mi.name}-identity-binding"
+        selector: "${var.aad_pod_id_binding_selector}"
+    EOF
+  ]
 }
 
 data "azurerm_resource_group" "aks_node_rg" {
@@ -107,7 +99,7 @@ resource "helm_release" "kv_csi" {
   name             = "csi-secrets-provider-azure"
   repository       = "https://raw.githubusercontent.com/Azure/secrets-store-csi-driver-provider-azure/master/charts"
   chart            = "csi-secrets-store-provider-azure"
-  version          = "0.0.6"
+  version          = "0.0.7"
   namespace        = var.kv_csi_ns
   create_namespace = true
 }
